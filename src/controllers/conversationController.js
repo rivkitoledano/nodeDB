@@ -60,13 +60,14 @@ async function cleanupConversation(req, res) {
     await client.query('BEGIN');
     await dropTempTables(client, conversationId);
     await client.query('COMMIT');
-    res.json({ message: 'Temporary tables dropped successfully' });
+    res.json({ message: 'Policy data cleaned for this conversationId' });
   } catch (error) {
     await client.query('ROLLBACK');
     res.status(500).json({ error: error.message });
   } finally {
     client.release();
   }
+  
 }
 
 module.exports = {
